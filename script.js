@@ -1,12 +1,22 @@
 // Rock, Paper, Scissors game played in DevTools console
 
 // Greet player
+console.log("Greetings!\nWelcome to the game of Rock, Paper, Scissors!");
 // Explain the rules
+console.log("The rules are simple:\n" +
+            "You will be playing prompted to make a choice: rock, paper, or scissors.\n" +
+            "If your choice beats the choice of the computer, you win the round and get one point.\n" +
+            "The first to get 3 points, wins the game!\n" +
+            "Good luck!")
 // Initialize computer's points counter and set it to zero
+let computerScore = 0;
 // Initialize player's points counter and set it to zero
+let playerScore = 0;
 // Initialize round number counter and set it to zero
-// Initialize computer's choice variable?
-// Initialize player's choice variable?
+let roundNumber = 0;
+// Initialize computer's and player's choice variables
+let computerChoice, playerChoice;
+
 // Create a function to get computer's choice
   // Get a random choice (1 out of 3)
   // Convert the choice into text to present to player later
