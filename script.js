@@ -18,9 +18,22 @@ let roundNumber = 0;
 let computerChoice, playerChoice;
 
 // Create a function to get computer's choice
+function getComputerChoice() {
   // Get a random choice (1 out of 3)
+  computerChoice = Math.floor(Math.random() * 3);
   // Convert the choice into text to present to player later
   // Assign computer's choice to the variable
+  if (computerChoice === 0) {
+    computerChoice = "Rock";
+  } else if (computerChoice === 1) {
+    computerChoice = "Paper";
+  } else {
+    computerChoice = "Scissors";
+  }
+  return computerChoice;
+}
+// getComputerChoice();
+
 // Create a function to get player's choice
   // Prompt player to input their choice
   // Assign player's choice to the variable
