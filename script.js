@@ -14,8 +14,8 @@ let computerScore = 0;
 let playerScore = 0;
 // Initialize round number counter and set it to zero
 let roundNumber = 0;
-// Initialize computer's and player's choice variables
-let computerChoice, playerChoice;
+// Initialize computer's and player's choice variables as well as the switch for loop
+let computerChoice, playerChoice, playerChoiceValid;
 
 // Create a function to get computer's choice
 function getComputerChoice() {
@@ -33,35 +33,58 @@ function getComputerChoice() {
   return computerChoice;
 }
 // getComputerChoice();
+// console.log(playerChoiceValid, playerChoice, computerChoice);
 
 // Create a function to get player's choice
 function getPlayerChoice() {
-  // Prompt player to input their choice
-  // Assign player's choice to the variable
-  playerChoice = prompt("What is your choice for this round?", "");
-  return playerChoice;
+
+  // Initialize variables to store patterns for player's input validation
+  const rockPattern = /\brock/i;
+  const paperPattern = /\bpaper/i;
+  const scissorsPattern = /\bscissors/i;
+
+  // Prompt player to input their choice and assign it to the variable
+  playerChoice = prompt(`What is your choice for round ${roundNumber + 1}?`, "");
+
+  // Validate the player's input, format it, and turn the switch on
+  if (rockPattern.test(playerChoice)) {
+    playerChoice = "Rock";
+    playerChoiceValid = true;
+  } else if (paperPattern.test(playerChoice)) {
+    playerChoice = "Paper";
+    playerChoiceValid = true;
+  } else if (scissorsPattern.test(playerChoice)) {
+    playerChoice = "Scissors";
+    playerChoiceValid = true;
+  } else {
+    // If the input is invalid, show the notification
+    alert("It seems, you made a mistake!\n" +
+      "Please, input one of the following: rock, paper, scissors.");
+    // and turn the switch off
+    playerChoiceValid = false;
+  }
+  return playerChoiceValid, playerChoice;
 }
 // getPlayerChoice();
+// console.log(playerChoiceValid, playerChoice, computerChoice);
 
-// If player's choice is invalid, present the error and repeat the prompt
-// If player chose *rock*, then
-  // if computer chose *rock*, declare a tie
-  // if computer chose *paper*, declare computer as the winner of the round...
-    // ... increase computer's score
-  // if computer chose *scissors*, declare player as the winner of the round...
-    // ... increase player's score
-// If player chose *paper*, then
-  // if computer chose *rock*, declare player as the winner of the round...
-    // ... increase player's score
-  // if computer chose *paper*, declare a tie
-  // if computer chose *scissors*, declare computer as the winner of the round...
-    // ... increase computer's score
-// If player chose *scissors*, then
-  // if computer chose *rock*, declare computer as the winner of the round...
-    // ... increase computer's score
-  // if computer chose *paper*, declare player as the winner of the round...
-    // ... increase player's score
-  // if computer chose *scissors*, declare a tie
+// Create a function to compare choices
+function compareChoices () {
+  // If player chose *rock*, then
+    // if computer chose *rock*, declare a tie
+  // If player chose *paper*, then
+    // if computer chose *rock*, declare player as the winner of the round...
+      // ... increase player's score
+    // if computer chose *paper*, declare a tie
+    // if computer chose *scissors*, declare computer as the winner of the round...
+      // ... increase computer's score
+  // If player chose *scissors*, then
+    // if computer chose *rock*, declare computer as the winner of the round...
+      // ... increase computer's score
+    // if computer chose *paper*, declare player as the winner of the round...
+      // ... increase player's score
+    // if computer chose *scissors*, declare a tie
+}
 // if computer's points are equal to 3, declare that player lost the game
 // if player's points are equal to 3, declare that player won the game
 // if no one has 3 points yet, play another round
