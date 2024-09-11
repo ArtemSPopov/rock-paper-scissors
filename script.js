@@ -35,8 +35,14 @@ function getComputerChoice() {
 // getComputerChoice();
 
 // Create a function to get player's choice
+function getPlayerChoice() {
   // Prompt player to input their choice
   // Assign player's choice to the variable
+  playerChoice = prompt("What is your choice for this round?", "");
+  return playerChoice;
+}
+// getPlayerChoice();
+
 // If player's choice is invalid, present the error and repeat the prompt
 // If player chose *rock*, then
   // if computer chose *rock*, declare a tie
