@@ -101,6 +101,20 @@ function showResult(roundNumber, playerChoice, playerScore, computerChoice, comp
 }
 // showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
 
+function playRound (roundNumber) {
+  console.log(`Round ${roundNumber + 1} has begun!`);
+  getComputerChoice();
+  // console.log(playerChoiceValid, playerChoice, computerChoice);
+  getPlayerChoice();
+  // console.log(playerChoiceValid, playerChoice, computerChoice);
+  compareChoices(playerChoice, computerChoice);
+  // console.log(playerScore, computerScore);
+  showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
+  ++roundNumber;
+  return roundNumber, computerScore, playerScore;
+}
+playRound(roundNumber, computerChoice, playerChoice);
+
 // if computer's points are equal to 3, declare that player lost the game
 // if player's points are equal to 3, declare that player won the game
 // if no one has 3 points yet, play another round
