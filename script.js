@@ -32,8 +32,6 @@ function getComputerChoice() {
   }
   return computerChoice;
 }
-// getComputerChoice();
-// console.log(playerChoiceValid, playerChoice, computerChoice);
 
 // Create a function to get player's choice
 function getPlayerChoice() {
@@ -65,8 +63,6 @@ function getPlayerChoice() {
   }
   return playerChoiceValid, playerChoice;
 }
-// getPlayerChoice();
-// console.log(playerChoiceValid, playerChoice, computerChoice);
 
 // Create a function to compare choices
 function compareChoices (playerChoice, computerChoice) {
@@ -85,8 +81,6 @@ function compareChoices (playerChoice, computerChoice) {
   }
   return playerScore, computerScore;
 }
-// compareChoices(playerChoice, computerChoice);
-// console.log(playerScore, computerScore);
 
 function showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore) {
   if (playerScore === computerScore) {
@@ -99,13 +93,14 @@ function showResult(roundNumber, playerChoice, playerScore, computerChoice, comp
     return console.log(`You lose! ${computerChoice} beats ${playerChoice}.\nEnd of round ${roundNumber + 1}.`);
   }
 }
-// showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
 
-function playRound (roundNumber) {
+function playRound () {
   console.log(`Round ${roundNumber + 1} has begun!`);
   getComputerChoice();
   // console.log(playerChoiceValid, playerChoice, computerChoice);
-  getPlayerChoice();
+  while (playerChoiceValid === undefined || playerChoiceValid === false) {
+    getPlayerChoice();
+  }
   // console.log(playerChoiceValid, playerChoice, computerChoice);
   compareChoices(playerChoice, computerChoice);
   // console.log(playerScore, computerScore);
