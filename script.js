@@ -69,22 +69,25 @@ function getPlayerChoice() {
 // console.log(playerChoiceValid, playerChoice, computerChoice);
 
 // Create a function to compare choices
-function compareChoices () {
-  // If player chose *rock*, then
-    // if computer chose *rock*, declare a tie
-  // If player chose *paper*, then
-    // if computer chose *rock*, declare player as the winner of the round...
-      // ... increase player's score
-    // if computer chose *paper*, declare a tie
-    // if computer chose *scissors*, declare computer as the winner of the round...
-      // ... increase computer's score
-  // If player chose *scissors*, then
-    // if computer chose *rock*, declare computer as the winner of the round...
-      // ... increase computer's score
-    // if computer chose *paper*, declare player as the winner of the round...
-      // ... increase player's score
-    // if computer chose *scissors*, declare a tie
+function compareChoices (playerChoice, computerChoice) {
+  // If player wins
+  if ((playerChoice === "Rock" && computerChoice === "Scissors")
+    || (playerChoice === "Paper" && computerChoice === "Rock")
+    || (playerChoice === "Scissors" && computerChoice === "Paper")) {
+    // increase player's score
+    ++playerScore;
+  // If player loses
+  } else if ((playerChoice === "Rock" && computerChoice === "Paper")
+    || (playerChoice === "Paper" && computerChoice === "Scissors")
+    || (playerChoice === "Scissors" && computerChoice === "Rock")) {
+    // increase computer's score
+    ++computerScore;
+  }
+  return playerScore, computerScore;
 }
+// compareChoices(playerChoice, computerChoice);
+// console.log(playerScore, computerScore);
+
 // if computer's points are equal to 3, declare that player lost the game
 // if player's points are equal to 3, declare that player won the game
 // if no one has 3 points yet, play another round
