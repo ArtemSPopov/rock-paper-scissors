@@ -1,13 +1,5 @@
 // Rock, Paper, Scissors game played in DevTools console
 
-// Greet player
-console.log("Greetings!\nWelcome to the game of Rock, Paper, Scissors!");
-// Explain the rules
-console.log("The rules are simple:\n" +
-            "You will be playing prompted to make a choice: rock, paper, or scissors.\n" +
-            "If your choice beats the choice of the computer, you win the round and get one point.\n" +
-            "The first to get 3 points, wins the game!\n" +
-            "Good luck!")
 // Initialize computer's points counter and set it to zero
 let computerScore = 0;
 // Initialize player's points counter and set it to zero
@@ -16,6 +8,14 @@ let playerScore = 0;
 let roundNumber = 0;
 // Initialize computer's and player's choice variables as well as the switch for loop
 let computerChoice, playerChoice, playerChoiceValid;
+// Greet player
+console.log("Greetings!\nWelcome to the game of Rock, Paper, Scissors!");
+// Explain the rules
+console.log("The rules are simple:\n" +
+            "You will be playing prompted to make a choice: rock, paper, or scissors.\n" +
+            "If your choice beats the choice of the computer, you win the round and get one point.\n" +
+            "The first to get 3 points, wins the game!\n" +
+            "Good luck!");
 
 // Create a function to get computer's choice
 function getComputerChoice() {
@@ -58,7 +58,7 @@ function getPlayerChoice() {
     playerChoiceValid = true;
   } else {
     // If the input is invalid, show the notification
-    alert("It seems, you made a mistake!\n" +
+    alert("It seems you have made a mistake!\n" +
       "Please, input one of the following: rock, paper, scissors.");
     // and turn the switch off
     playerChoiceValid = false;
@@ -87,6 +87,19 @@ function compareChoices (playerChoice, computerChoice) {
 }
 // compareChoices(playerChoice, computerChoice);
 // console.log(playerScore, computerScore);
+
+function showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore) {
+  if (playerScore === computerScore) {
+    return console.log(`It is a tie! ${playerChoice} doesn't beat ${computerChoice}.\nEnd of round ${roundNumber + 1}.`);
+  }
+  if (playerScore > computerScore) {
+    return console.log(`You win! ${playerChoice} beats ${computerChoice}.\nEnd of round ${roundNumber + 1}.`);
+  }
+  if (playerScore < computerScore) {
+    return console.log(`You lose! ${computerChoice} beats ${playerChoice}.\nEnd of round ${roundNumber + 1}.`);
+  }
+}
+// showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
 
 // if computer's points are equal to 3, declare that player lost the game
 // if player's points are equal to 3, declare that player won the game
