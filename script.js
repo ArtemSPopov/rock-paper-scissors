@@ -18,19 +18,31 @@ console.log(`The rules are simple:\n` +
             `Good luck!`);
 playRound();
 
-// Create a function to get computer's choice
-function getComputerChoice() {
-  // Get a random choice (1 out of 3)
-  computerChoice = Math.floor(Math.random() * 3);
-  // Convert the choice into readable text to present to player later
-  if (computerChoice === 0) {
-    computerChoice = `Rock`;
-  } else if (computerChoice === 1) {
-    computerChoice = `Paper`;
-  } else {
-    computerChoice = `Scissors`;
+// Create a function to play one round
+function playRound () {
+  // While player's choice is invalid
+  while (!isPlayerChoiceValid()) {
+    // keep trying to get player's input
+    getPlayerChoice();
+    // but if the player presses Cancel at any point
+    if (playerChoice === null) {
+      // exit the loop and the function
+      break;
+    }
   }
-  return computerChoice;
+  // if player didn't press cancel
+  if (playerChoice !== null) {
+    // Present round number
+    console.log(`--- Round ${roundNumber + 1} ---`);
+    // Get computer choice
+    getComputerChoice();
+    // Get player's choice
+    compareChoices(playerChoice, computerChoice);
+    // Show the result
+    showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
+    // Increase round counter
+    ++roundNumber;
+  }
 }
 
 // Create a function to get player's choice
@@ -53,6 +65,19 @@ function getPlayerChoice() {
   }
 }
 
+// Create a function to check if player pressed Cancel in the prompt
+function checkCancel() {
+  // If player pressed Cancel
+  if (playerChoice === null) {
+    // Show message
+    console.log(`The game has been canceled!`);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Create a function to validate player's input
 function isPlayerChoiceValid() {
   // Initialize variables to store patterns for player's input validation
   const rockPattern = /^rock$/i;
@@ -74,6 +99,21 @@ function isPlayerChoiceValid() {
     // return that player's choice is invalid
     return false;
   }
+}
+
+// Create a function to get computer's choice
+function getComputerChoice() {
+  // Get a random choice (1 out of 3)
+  computerChoice = Math.floor(Math.random() * 3);
+  // Convert the choice into readable text to present to player later
+  if (computerChoice === 0) {
+    computerChoice = `Rock`;
+  } else if (computerChoice === 1) {
+    computerChoice = `Paper`;
+  } else {
+    computerChoice = `Scissors`;
+  }
+  return computerChoice;
 }
 
 // Create a function to compare choices
@@ -104,44 +144,5 @@ function showResult(roundNumber, playerChoice, playerScore, computerChoice, comp
   }
   if (playerScore < computerScore) {
     return console.log(`You lose! ${computerChoice} beats ${playerChoice}.\nEnd of round ${roundNumber + 1}.`);
-  }
-}
-
-// Create a function to check if player pressed Cancel in the prompt
-function checkCancel() {
-  // If player pressed Cancel
-  if (playerChoice === null) {
-    // Show message
-    console.log(`The game has been canceled!`);
-    return true;
-  } else {
-    return false;
-  }
-}
-
-// Create a function to play one round
-function playRound () {
-  // While player's choice is invalid
-  while (!isPlayerChoiceValid()) {
-    // keep trying to get player's input
-    getPlayerChoice();
-    // but if the player presses Cancel at any point
-    if (playerChoice === null) {
-      // exit the loop and the function
-      break;
-    }
-  }
-  // if player didn't press cancel
-  if (playerChoice !== null) {
-    // Present round number
-    console.log(`--- Round ${roundNumber + 1} ---`);
-    // Get computer choice
-    getComputerChoice();
-    // Get player's choice
-    compareChoices(playerChoice, computerChoice);
-    // Show the result
-    showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
-    // Increase round counter
-    ++roundNumber;
   }
 }
