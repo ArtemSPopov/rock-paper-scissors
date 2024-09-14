@@ -6,27 +6,51 @@ let computerScore = 0;
 let playerScore = 0;
 // Initialize round number counter and set it to zero
 let roundNumber = 0;
-// Initialize computer's and player's choice variables as well as the switch for loop
-let computerChoice, playerChoice, playerChoiceValid;
+// Initialize computer and player's choice variables
+let computerChoice, playerChoice;
+// Initialize a variable to store the result of a round
+let roundResult;
+// Initialize a switch variable to start/end the game
+let gameOn;
 // Greet player
 console.log(`Greetings!\nWelcome to the game of Rock, Paper, Scissors!`);
 // Explain the rules
 console.log(`The rules are simple:\n` +
-            `You will be playing prompted to make a choice: rock, paper, or scissors.\n` +
+            `You will be prompted to make a choice: rock, paper, or scissors.\n` +
             `If your choice beats the choice of the computer, you win the round and get one point.\n` +
             `The first to get 3 points, wins the game!\n` +
-            `Good luck!`);
-playRound();
+            `Good luck!`
+          );
+playGame();
+
+// Create a function to play the game (best of 5 rounds)
+function playGame() {
+  // Turn the switch on
+  gameOn = true;
+  while (gameOn) {
+    playRound();
+    // Nullify player's choice after every round
+    playerChoice = undefined;
+  }
+  // If the player does not press Cancel
+  if (playerChoice !== null) {
+    // Show the winner and the results of the game
+    showWinner();
+  }
+}
 
 // Create a function to play one round
-function playRound () {
+function playRound() {
+  roundResult = 0;
   // While player's choice is invalid
   while (!isPlayerChoiceValid()) {
-    // keep trying to get player's input
+    // Keep trying to get player's input
     getPlayerChoice();
-    // but if the player presses Cancel at any point
+    // But if the player presses Cancel at any point
     if (playerChoice === null) {
-      // exit the loop and the function
+      // Turn the game switch off
+      gameOn = false;
+      // Exit the loop and the function
       break;
     }
   }
@@ -42,6 +66,11 @@ function playRound () {
     showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
     // Increase round counter
     ++roundNumber;
+    // When anyone's score reaches 3 points
+    if (playerScore === 3 || computerScore === 3) {
+      // Turn the game switch off
+      gameOn = false;
+    }
   }
 }
 
@@ -57,7 +86,8 @@ function getPlayerChoice() {
     } else {
       // Show the alert
       alert(`It seems you have made a mistake!\n` +
-        `Please, input one of the following: rock, paper, scissors.`);
+        `Please, input one of the following: rock, paper, scissors.`
+      );
     }
   // If player pressed Cancel, exit the function
   } else {
@@ -71,6 +101,7 @@ function checkCancel() {
   if (playerChoice === null) {
     // Show message
     console.log(`The game has been canceled!`);
+    gameOn = false;
     return true;
   } else {
     return false;
@@ -117,32 +148,61 @@ function getComputerChoice() {
 }
 
 // Create a function to compare choices
-function compareChoices (playerChoice, computerChoice) {
+function compareChoices(playerChoice, computerChoice) {
   // If player wins
   if ((playerChoice === "Rock" && computerChoice === "Scissors")
     || (playerChoice === "Paper" && computerChoice === "Rock")
     || (playerChoice === "Scissors" && computerChoice === "Paper")) {
     // increase player's score
     ++playerScore;
+    roundResult = 1;
   // If player loses
   } else if ((playerChoice === "Rock" && computerChoice === "Paper")
     || (playerChoice === "Paper" && computerChoice === "Scissors")
     || (playerChoice === "Scissors" && computerChoice === "Rock")) {
     // increase computer's score
     ++computerScore;
+    roundResult = -1;
   }
   return playerScore, computerScore;
 }
 
 // Create a function to show the result of a round and show corresponding message
 function showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore) {
-  if (playerScore === computerScore) {
-    return console.log(`It is a tie! ${playerChoice} doesn't beat ${computerChoice}.\nEnd of round ${roundNumber + 1}.`);
+  if (roundResult === 0) {
+    return console.log(`It is a tie!\n` +
+      `${playerChoice} doesn't beat ${computerChoice}.\n` +
+      `End of round ${roundNumber + 1}`
+    );
   }
-  if (playerScore > computerScore) {
-    return console.log(`You win! ${playerChoice} beats ${computerChoice}.\nEnd of round ${roundNumber + 1}.`);
+  if (roundResult === 1) {
+    return console.log(`You win!\n` +
+      `${playerChoice} beats ${computerChoice}.\n` +
+      `End of round ${roundNumber + 1}`
+    );
   }
-  if (playerScore < computerScore) {
-    return console.log(`You lose! ${computerChoice} beats ${playerChoice}.\nEnd of round ${roundNumber + 1}.`);
+  if (roundResult === -1) {
+    return console.log(`You lose!\n` +
+      `${computerChoice} beats ${playerChoice}.\n` +
+      `End of round ${roundNumber + 1}`);
   }
+}
+
+// Create a function to show the winner and the final result
+function showWinner() {
+  // Show the appropriate message about the outcome of the game
+  if (playerScore === 3) {
+    console.log(`\nCongratulations! You win after ${roundNumber} rounds!\n `);
+  } else if (computerScore === 3) {
+    console.log(`\nUnfortunately, you lose after ${roundNumber} rounds.\n `);
+  }
+  // Show the final score of game
+  console.log(`\nFINAL SCORE\n` +
+    `-----------\n` + 
+    `You:      ${playerScore}\n` +
+    `Computer: ${computerScore}\n` +
+    `-----------\n\n` + 
+    `Thank you for playing!`
+  );
+  return;
 }
