@@ -13,13 +13,16 @@ let roundResult;
 // Initialize a switch variable to start/end the game
 let gameOn;
 // Greet player
-console.log(`Greetings!\nWelcome to the game of Rock, Paper, Scissors!`);
+console.log(`%cGreetings!\nWelcome to the game of Rock, Paper, Scissors!`,
+  `font-style: italic; font-size: 14px; line-height: 200%`
+);
 // Explain the rules
-console.log(`The rules are simple:\n` +
+console.log(`%cThe rules are simple:\n` +
             `You will be prompted to make a choice: rock, paper, or scissors.\n` +
             `If your choice beats the choice of the computer, you win the round and get one point.\n` +
             `The first to get 3 points, wins the game!\n` +
-            `Good luck!`
+            `Good luck!`,
+            `line-height: 150%`
           );
 playGame();
 
@@ -101,7 +104,7 @@ function checkCancel() {
   // If player pressed Cancel
   if (playerChoice === null) {
     // Show message
-    console.log(`The game has been canceled!`);
+    console.log(`%cThe game has been canceled!`, `font-size: 14px; font-style: italic`);
     gameOn = false;
     return true;
   } else {
@@ -169,21 +172,58 @@ function compareChoices() {
 // Create a function to show the result of a round and show corresponding message
 function showResult() {
   if (roundResult === 0) {
-    console.log(`It is a tie!\n` +
-      `${playerChoice} doesn't beat ${computerChoice}.\n` +
-      `End of round ${roundNumber + 1}`
+    console.log(`Your choice         ${playerChoice}\n` +
+      `Computer's choice   ${computerChoice}\n` +
+      `%cIt is a tie!\n` +
+      `%cCurrent score\n` +
+      `%c-------------\n` +
+      `%cYou         ${playerScore}\n` +
+      `%cComputer    ${computerScore}\n` +
+      `%c-------------\n` +
+      `%cEnd of round ${roundNumber + 1}`,
+      `font-size: 14px; margin-top: 10px; color: #FFFFE0`,
+      `margin-top: 10px`,
+      `margin-bottom: 3px`,
+      ``,``,
+      `margin-top: 3px`,
+      `margin: 10px 0; font-style: italic`
     );
   }
   if (roundResult === 1) {
-    console.log(`You win!\n` +
-      `${playerChoice} beats ${computerChoice}.\n` +
-      `End of round ${roundNumber + 1}`
+    console.log(`Your choice         ${playerChoice}\n` +
+      `Computer's choice   ${computerChoice}\n` +
+      `%cYou win!\n` +
+      `%cCurrent score\n` +
+      `%c-------------\n` +
+      `%cYou         ${playerScore}\n` +
+      `%cComputer    ${computerScore}\n` +
+      `%c-------------\n` +
+      `%cEnd of round ${roundNumber + 1}`,
+      `font-size: 14px; margin-top: 10px; color: #90EE90`,
+      `margin-top: 10px`,
+      `margin-bottom: 3px`,
+      ``,``,
+      `margin-top: 3px`,
+      `margin: 10px 0; font-style: italic`
     );
   }
   if (roundResult === -1) {
-    console.log(`You lose!\n` +
-      `${computerChoice} beats ${playerChoice}.\n` +
-      `End of round ${roundNumber + 1}`);
+    console.log(`Your choice         ${playerChoice}\n` +
+      `Computer's choice   ${computerChoice}\n` +
+      `%cYou lose!\n` +
+      `%cCurrent score\n` +
+      `%c-------------\n` +
+      `%cYou         ${playerScore}\n` +
+      `%cComputer    ${computerScore}\n` +
+      `%c-------------\n` +
+      `%cEnd of round ${roundNumber + 1}`,
+      `font-size: 14px; margin-top: 10px; color: red`,
+      `margin-top: 10px`,
+      `margin-bottom: 3px`,
+      ``,``,
+      `margin-top: 3px`,
+      `margin: 10px 0; font-style: italic`
+    );
   }
 }
 
@@ -191,16 +231,23 @@ function showResult() {
 function showWinner() {
   // Show the appropriate message about the outcome of the game
   if (playerScore === 3) {
-    console.log(`\nCongratulations! You win after ${roundNumber} rounds!\n `);
+    console.log(`%cCongratulations! You win after ${roundNumber} rounds!`,
+      `font-size: 14px; color: #90EE90; margin: 20px 0`
+    );
   } else if (computerScore === 3) {
-    console.log(`\nUnfortunately, you lose after ${roundNumber} rounds.\n `);
+    console.log(`%cUnfortunately, you lose after ${roundNumber} rounds.`,
+      `font-size: 14px; color: red; margin: 20px 0`
+    );
   }
   // Show the final score of game
-  console.log(`\nFINAL SCORE\n` +
-    `-----------\n` + 
-    `You:      ${playerScore}\n` +
-    `Computer: ${computerScore}\n` +
-    `-----------\n\n` + 
-    `Thank you for playing!`
+  console.log(`%cFINAL SCORE\n` +
+    `%c------------\n` +
+    `%cYou        ${playerScore}\n` +
+    `%cComputer   ${computerScore}\n` +
+    `%c------------\n` +
+    `%cThank you for playing!`,
+    `margin: 5px 0; font-size: 14px`,
+    `margin-bottom: 3px`,``,``,`margin-top: 3px`,
+    `margin-top: 20px; font-size: 14px; font-style: italic`
   );
 }
