@@ -1,17 +1,37 @@
+//
 // Rock, Paper, Scissors game played in DevTools console
+//
+// Constraints:
+// - the entire game is played in the console,
+//   with the only interaction being user's input;
+// - manual input from the user;
+// - user's input can be case-insensitive;
+// - computer's choice is random.
+// 
+// Features:
+// - the game is played in the Best of Five format
+//   (first to get 3 points, wins);
+// - `Cancel` button of the prompt is fully
+//   integrated and ends the game in any round;
+// - user's input is validated against a RegEx
+//   and in the case of wrong input, the
+//   the user is prompted to repeat the input;
+// - the score after each round as well as in the end
+//   is presented to the user;
+// - output in the console is styled.
+// 
+// Created by Artem Popov
 
-// Initialize computer's points counter and set it to zero
-let computerScore = 0;
-// Initialize player's points counter and set it to zero
-let playerScore = 0;
-// Initialize round number counter and set it to zero
-let roundNumber = 0;
-// Initialize computer and player's choice variables
-let computerChoice, playerChoice;
-// Initialize a variable to store the result of a round
-let roundResult;
-// Initialize a switch variable to start/end the game
-let gameOn;
+
+// Initialize variables to store 
+let playerChoice,       // player's choice in string
+    computerChoice,     // computer's choice
+    playerScore = 0,    // player's score
+    computerScore = 0,  // computer's score
+    roundNumber = 1,    // round number
+    roundResult,        // result of a round (0 - tie, 1 - win, -1 - lose)
+    gameOn;             // status of the game
+
 // Greet player
 console.log(`%cGreetings!\nWelcome to the game of Rock, Paper, Scissors!`,
   `font-style: italic; font-size: 14px; line-height: 200%`
@@ -23,10 +43,11 @@ console.log(`%cThe rules are simple:\n` +
             `The first to get 3 points, wins the game!\n` +
             `Good luck!`,
             `line-height: 150%`
-          );
+);
+// Initiate the game
 playGame();
 
-// Create a function to play the game (best of 5 rounds)
+// Function to play the game
 function playGame() {
   // Turn the switch on
   gameOn = true;
@@ -35,21 +56,22 @@ function playGame() {
     // Nullify player's choice after every round
     playerChoice = undefined;
   }
-  // If the player does not press Cancel
+  // If player does not press Cancel
   if (playerChoice !==  null) {
-    // Show the winner and the results of the game
+    // Show the winner and the result of the game
     showWinner();
   }
 }
 
-// Create a function to play one round
+// Function to play one round
 function playRound() {
+  // Set the default round result as a tie (0)
   roundResult = 0;
   // While player's choice is invalid
   while (!isPlayerChoiceValid()) {
     // Keep trying to get player's input
     getPlayerChoice();
-    // But if the player presses Cancel at any point
+    // But if player presses Cancel at any point
     if (playerChoice === null) {
       // Turn the game switch off
       gameOn = false;
@@ -57,7 +79,7 @@ function playRound() {
       break;
     }
   }
-  // if player didn't press cancel
+  // If player didn't press cancel
   if (playerChoice !== null) {
     // Get computer choice
     getComputerChoice();
@@ -78,33 +100,39 @@ function playRound() {
   }
 }
 
-// Create a function to get player's choice
+// Function to get player's choice
 function getPlayerChoice() {
-  // Prompt player to input their choice and assign it to the variable
+  // Prompt player to input their choice and store it in the variable
   playerChoice = prompt(`What is your choice for round ${roundNumber + 1}?`, ``);
-  // Did player press Cancel?
-  if (checkCancel() === false) {
+  // If player pressed Cancel, exit the function
+  if (checkCancel() === true) {
+    return;
+  // If player didn't press Cancel
+  } else {
+    // Make sure their input is valid (fits the RegEx pattern)
     if (isPlayerChoiceValid()) {
       return playerChoice;
-    // If player's choice is invalid
+    // If player's input is invalid
     } else {
       // Show the alert
       alert(`It seems you have made a mistake!\n` +
         `Please, input one of the following: rock, paper, scissors.`
       );
+      // After this, the program prompts the use
+      // to input their choice again,
+      // because isPlayerChoiceValid is still false
     }
-  // If player pressed Cancel, exit the function
-  } else {
-    return;
   }
 }
 
-// Create a function to check if player pressed Cancel in the prompt
+// Function to check if player pressed Cancel
+// when prompted to input their choice
 function checkCancel() {
   // If player pressed Cancel
   if (playerChoice === null) {
     // Show message
     console.log(`%cThe game has been canceled!`, `font-size: 14px; font-style: italic`);
+    // Turn the game switch off
     gameOn = false;
     return true;
   } else {
@@ -112,13 +140,15 @@ function checkCancel() {
   }
 }
 
-// Create a function to validate player's input
+// Function to validate player's input
 function isPlayerChoiceValid() {
-  // Initialize variables to store patterns for player's input validation
-  const rockPattern = /^rock$/i;
-  const paperPattern = /^paper$/i;
-  const scissorsPattern = /^scissors$/i;
-  // If player's input fits one of the patterns
+  // Initialize constant variables to store
+  // patterns to validate player's input against.
+  const rockPattern = /^rock$/i;              // Expressions match strings only containing
+  const paperPattern = /^paper$/i;            // words "rock", "paper", and "scissors",
+  const scissorsPattern = /^scissors$/i;      // without any symbols after, ignoring case
+  // If player's input is tested positively
+  // against one of the expressions
   if (rockPattern.test(playerChoice)) {
     playerChoice = `Rock`;
     // return that player's choice is valid
@@ -129,28 +159,25 @@ function isPlayerChoiceValid() {
   } else if (scissorsPattern.test(playerChoice)) {
     playerChoice = `Scissors`;
     return true;
-  // If player's input does not fit any of the patterns
+  // If player's input does not match
+  // any of the expressions
   } else {
     // return that player's choice is invalid
     return false;
   }
 }
 
-// Create a function to get computer's choice
+// Function to get computer's choice
 function getComputerChoice() {
-  // Get a random choice (1 out of 3)
+  // Get a random choice (0, 1 or 2)
   computerChoice = Math.floor(Math.random() * 3);
-  // Convert the choice into readable text to present to player later
-  if (computerChoice === 0) {
-    computerChoice = `Rock`;
-  } else if (computerChoice === 1) {
-    computerChoice = `Paper`;
-  } else {
-    computerChoice = `Scissors`;
-  }
+  // Convert the choice into presentable text
+  (computerChoice === 0) ? computerChoice = `Rock`:
+  (computerChoice === 1) ? computerChoice = `Paper`:
+  computerChoice = `Scissors`;
 }
 
-// Create a function to compare choices
+// Function to compare choices
 function compareChoices() {
   // If player wins
   if ((playerChoice === "Rock" && computerChoice === "Scissors")
@@ -158,6 +185,7 @@ function compareChoices() {
     || (playerChoice === "Scissors" && computerChoice === "Paper")) {
     // increase player's score
     ++playerScore;
+    // Assign the round result as win (1)
     roundResult = 1;
   // If player loses
   } else if ((playerChoice === "Rock" && computerChoice === "Paper")
@@ -165,12 +193,15 @@ function compareChoices() {
     || (playerChoice === "Scissors" && computerChoice === "Rock")) {
     // increase computer's score
     ++computerScore;
+    // Assign the round result as a loss (-1)
     roundResult = -1;
   }
 }
 
-// Create a function to show the result of a round and show corresponding message
+// Function to show the result of a round
+// and the corresponding message
 function showResult() {
+  // If the round result is a tie
   if (roundResult === 0) {
     console.log(`Your choice         ${playerChoice}\n` +
       `Computer's choice   ${computerChoice}\n` +
@@ -184,11 +215,13 @@ function showResult() {
       `font-size: 14px; margin-top: 10px; color: #FFFFE0`,
       `margin-top: 10px`,
       `margin-bottom: 3px`,
-      ``,``,
+      ``,
+      ``,
       `margin-top: 3px`,
       `margin: 10px 0; font-style: italic`
     );
   }
+  // If the round result is a win
   if (roundResult === 1) {
     console.log(`Your choice         ${playerChoice}\n` +
       `Computer's choice   ${computerChoice}\n` +
@@ -202,11 +235,13 @@ function showResult() {
       `font-size: 14px; margin-top: 10px; color: #90EE90`,
       `margin-top: 10px`,
       `margin-bottom: 3px`,
-      ``,``,
+      ``,
+      ``,
       `margin-top: 3px`,
       `margin: 10px 0; font-style: italic`
     );
   }
+  // If the round result is a loss
   if (roundResult === -1) {
     console.log(`Your choice         ${playerChoice}\n` +
       `Computer's choice   ${computerChoice}\n` +
@@ -220,20 +255,22 @@ function showResult() {
       `font-size: 14px; margin-top: 10px; color: red`,
       `margin-top: 10px`,
       `margin-bottom: 3px`,
-      ``,``,
+      ``,
+      ``,
       `margin-top: 3px`,
       `margin: 10px 0; font-style: italic`
     );
   }
 }
 
-// Create a function to show the winner and the final result
+// Function to show the winner and final score
 function showWinner() {
-  // Show the appropriate message about the outcome of the game
+  // If player wins
   if (playerScore === 3) {
     console.log(`%cCongratulations! You win after ${roundNumber} rounds!`,
       `font-size: 14px; color: #90EE90; margin: 20px 0`
     );
+  // If player loses
   } else if (computerScore === 3) {
     console.log(`%cUnfortunately, you lose after ${roundNumber} rounds.`,
       `font-size: 14px; color: red; margin: 20px 0`
