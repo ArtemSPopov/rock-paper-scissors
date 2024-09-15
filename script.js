@@ -28,7 +28,7 @@ let playerChoice,       // player's choice in string
     computerChoice,     // computer's choice
     playerScore = 0,    // player's score
     computerScore = 0,  // computer's score
-    roundNumber = 1,    // round number
+    roundNumber = 0,    // round number
     roundResult,        // result of a round (0 - tie, 1 - win, -1 - lose)
     gameOn;             // status of the game
 
