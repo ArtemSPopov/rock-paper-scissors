@@ -33,7 +33,7 @@ function playGame() {
     playerChoice = undefined;
   }
   // If the player does not press Cancel
-  if (playerChoice !== null) {
+  if (playerChoice !==  null) {
     // Show the winner and the results of the game
     showWinner();
   }
@@ -56,14 +56,15 @@ function playRound() {
   }
   // if player didn't press cancel
   if (playerChoice !== null) {
-    // Present round number
-    console.log(`--- Round ${roundNumber + 1} ---`);
     // Get computer choice
     getComputerChoice();
     // Get player's choice
-    compareChoices(playerChoice, computerChoice);
+    compareChoices();
+    // Present round number
+    console.group(`--- Round ${roundNumber + 1} ---`);
     // Show the result
-    showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore);
+    showResult();
+    console.groupEnd();
     // Increase round counter
     ++roundNumber;
     // When anyone's score reaches 3 points
@@ -144,11 +145,10 @@ function getComputerChoice() {
   } else {
     computerChoice = `Scissors`;
   }
-  return computerChoice;
 }
 
 // Create a function to compare choices
-function compareChoices(playerChoice, computerChoice) {
+function compareChoices() {
   // If player wins
   if ((playerChoice === "Rock" && computerChoice === "Scissors")
     || (playerChoice === "Paper" && computerChoice === "Rock")
@@ -164,25 +164,24 @@ function compareChoices(playerChoice, computerChoice) {
     ++computerScore;
     roundResult = -1;
   }
-  return playerScore, computerScore;
 }
 
 // Create a function to show the result of a round and show corresponding message
-function showResult(roundNumber, playerChoice, playerScore, computerChoice, computerScore) {
+function showResult() {
   if (roundResult === 0) {
-    return console.log(`It is a tie!\n` +
+    console.log(`It is a tie!\n` +
       `${playerChoice} doesn't beat ${computerChoice}.\n` +
       `End of round ${roundNumber + 1}`
     );
   }
   if (roundResult === 1) {
-    return console.log(`You win!\n` +
+    console.log(`You win!\n` +
       `${playerChoice} beats ${computerChoice}.\n` +
       `End of round ${roundNumber + 1}`
     );
   }
   if (roundResult === -1) {
-    return console.log(`You lose!\n` +
+    console.log(`You lose!\n` +
       `${computerChoice} beats ${playerChoice}.\n` +
       `End of round ${roundNumber + 1}`);
   }
@@ -204,5 +203,4 @@ function showWinner() {
     `-----------\n\n` + 
     `Thank you for playing!`
   );
-  return;
 }
