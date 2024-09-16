@@ -1,5 +1,5 @@
 //
-// Rock, Paper, Scissors game played in DevTools console
+// Rock, Paper, Scissors game in DevTools console
 //
 // Constraints:
 // - the entire game is played in the console,
@@ -11,14 +11,15 @@
 // Features:
 // - the game is played in the Best of Five format
 //   (first to get 3 points, wins);
-// - `Cancel` button of the prompt is fully
-//   integrated and ends the game in any round;
-// - user's input is validated against a RegEx
-//   and in the case of wrong input, the
+// - "Cancel" button of the prompt is fully
+//   grated and ends the game at any point,
+//   presenting the results thus far;
+// - user's input is validated against a Regular
+//   Expression, and in the case of wrong input,
 //   the user is prompted to repeat the input;
-// - the score after each round as well as in the end
-//   is presented to the user;
-// - output in the console is styled.
+// - the score after each round as well as after
+//   the game is presented to the user;
+// - almost all outputs in the console are styled.
 // 
 // Created by Artem Popov
 
@@ -56,11 +57,9 @@ function playGame() {
     // Nullify player's choice after every round
     playerChoice = undefined;
   }
-  // If player does not press Cancel
-  if (playerChoice !==  null) {
-    // Show the winner and the result of the game
-    showWinner();
-  }
+  // After the game switch is off
+  // show the winner and the result of the game
+  showWinner();
 }
 
 // Function to play one round
@@ -105,7 +104,7 @@ function getPlayerChoice() {
   // Prompt player to input their choice and store it in the variable
   playerChoice = prompt(`What is your choice for round ${roundNumber + 1}?`, ``);
   // If player pressed Cancel, exit the function
-  if (checkCancel() === true) {
+  if (checkCancel()) {
     return;
   // If player didn't press Cancel
   } else {
